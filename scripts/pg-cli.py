@@ -7,7 +7,6 @@ import glob
 import xml.etree.ElementTree as ET
 
 context_path = "/opt/dotcms/wwwroot/current/plugins/com.dotcms.config/ROOT/dotserver/tomcat-*/webapps/ROOT/META-INF/context.xml"
-
 for context in glob.glob(context_path):
     tree = ET.parse(context)
 
@@ -18,5 +17,5 @@ for child in tree.getroot():
             (_, _, db_host, db_database) = url.split("/")
             db_username = child.attrib["username"]
             db_password = child.attrib["password"]
-            print ("\nPGPASSWORD='%s' psql -h %s -U %s %s\n" %(db_password, db_host,db_username, db_database))
+            print ("\nPGPASSWORD='%s' psql -h %s -U %s %s\n" %(db_password, db_host, db_username, db_database))
           
