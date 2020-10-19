@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 # curl -s https://raw.githubusercontent.com/yolabingo/dotcms/main/scripts/pg-cli.py | python3
-
 # prints out psql cli command for dotcms instance using db credentials from context.xml
 
 import glob
