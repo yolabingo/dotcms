@@ -13,7 +13,7 @@ for context in glob.glob(context_path):
 for child in tree.getroot():
     if child.tag == "Resource" and child.attrib["name"] == "jdbc/dotCMSPool":
         url = child.attrib["url"]
-        if url.startswith("jdbc:postgresql://"):
+        if url.startswith("jdbc:postgresql://") or url.startswith("jdbc:mariadb:aurora"):
             (_, _, db_host, db_database) = url.split("/")
             db_username = child.attrib["username"]
             db_password = child.attrib["password"]
