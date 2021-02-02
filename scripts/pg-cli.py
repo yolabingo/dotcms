@@ -15,7 +15,7 @@ class DotcmsDbCreds():
 
     def __init__(self):
         self.creds = None
-        self.db_properties = "/opt/dotcms/wwwroot/current/plugins/com.dotcms.config/ROOT/dotserver/tomcat-8.5.32/webapps/ROOT/WEB-INF/classes/db.properties"
+        self.db_properties = "/opt/dotcms/wwwroot/current/plugins/com.dotcms.config/ROOT/dotserver/tomcat-*/webapps/ROOT/WEB-INF/classes/db.properties"
         self.context_xml = "/opt/dotcms/wwwroot/current/plugins/com.dotcms.config/ROOT/dotserver/tomcat-*/webapps/ROOT/META-INF/context.xml"
 
 
@@ -42,8 +42,8 @@ class DotcmsDbCreds():
         """ read and parse context.xml file for database credentials 
             This is the fallback if db.properties is not present.
         """
-        for context in glob.glob(self.context_xml):
-            tree = ET.parse(context)
+        for context_file in glob.glob(self.context_xml):
+            tree = ET.parse(context_file)
 
         for child in tree.getroot():
             if child.tag == "Resource" and child.attrib["name"] == "jdbc/dotCMSPool":
@@ -54,12 +54,13 @@ class DotcmsDbCreds():
                     db_password = child.attrib["password"]
                     self.set_credentials(password=db_password, host=db_host, username=db_username, database=db_database)
         if self.creds:
-            print("credentials found in %s  " %(self.context_xml,))
+            print("credentials found in\n  %s  " %(context_file,))
 
     def parse_db_properties(self):
         """ parse db.properties for database credentials """
-        with open(self.db_properties, "r") as fh:
-            lines = fh.readlines()
+        for db_properties_file in glob.glob(self.db_properties):
+            with open(db_properties_file, "r") as fh:
+                lines = fh.readlines()
         for line in lines:
             # remove all whitespace
             line = "".join(line.split())
@@ -76,7 +77,7 @@ class DotcmsDbCreds():
                         db_host = jdbc_url[2]
                         db_database = jdbc_url[3]
         if db_username and db_password and db_host and db_database:
-            print ("credentials found in %s  " %(self.db_properties))
+            print ("credentials found in\n  %s  " %(db_properties_file,))
             self.set_credentials(password=db_password, host=db_host, username=db_username, database=db_database)
 
 
@@ -86,7 +87,7 @@ class DotcmsDbCreds():
 
     def print_scripts_config(self):
         print("\n##  /opt/dotcms/sbin/scripts_config.sh ##")
-        print('\nSQL_DBNAMES="%s"' %(self.creds.database,))
+        print('SQL_DBNAMES="%s"' %(self.creds.database,))
         print('SQL_HOSTNAME="%s"' %(self.creds.host,))
         print('SQL_USERNAME="%s"' %(self.creds.username,))
         print('SQL_PASSWORD="%s"\n' %(self.creds.password,))
