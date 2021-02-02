@@ -33,6 +33,7 @@ class DotcmsDbCreds():
             self.parse_context_xml()
         if self.creds:
             self.print_scripts_config()
+            self.print_dump()
             self.print_connect()
         else:
             print("Credentials not found")
@@ -82,10 +83,10 @@ class DotcmsDbCreds():
 
 
     def print_connect(self):
-        print("\nPGPASSWORD='%s' psql -h %s -U %s %s\n" %(self.creds.password, self.creds.host, self.creds.username, self.creds.database))
+        print("\nPGPASSWORD='%s' psql -h %s -U %s %s" %(self.creds.password, self.creds.host, self.creds.username, self.creds.database))
 
 
-    def print_dumpt(self):
+    def print_dump(self):
         print("\nPGPASSWORD='%s' pg_dump -h %s -U %s -d %s\n" %(self.creds.password, self.creds.host, self.creds.username, self.creds.database))
 
 
