@@ -5,7 +5,7 @@
 
 import collections
 import glob
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree
 
 
 Credentials = collections.namedtuple('Credentials', 'password host username database')
@@ -32,9 +32,13 @@ class DotcmsDbCreds():
         if not self.creds:
             self.parse_context_xml()
         if self.creds:
+            print()
             self.print_scripts_config()
+            print()
             self.print_dump()
+            print()
             self.print_connect()
+            print()
         else:
             print("Credentials not found")
 
@@ -44,7 +48,7 @@ class DotcmsDbCreds():
             This is the fallback if db.properties is not present.
         """
         for context_file in glob.glob(self.context_xml):
-            tree = ET.parse(context_file)
+            tree = ElementTree.parse(context_file)
 
         for child in tree.getroot():
             if child.tag == "Resource" and child.attrib["name"] == "jdbc/dotCMSPool":
@@ -83,19 +87,19 @@ class DotcmsDbCreds():
 
 
     def print_connect(self):
-        print("\nPGPASSWORD='%s' psql -h %s -U %s %s" %(self.creds.password, self.creds.host, self.creds.username, self.creds.database))
+        print("PGPASSWORD='%s' psql -h %s -U %s %s" %(self.creds.password, self.creds.host, self.creds.username, self.creds.database))
 
 
     def print_dump(self):
-        print("\nPGPASSWORD='%s' pg_dump -h %s -U %s -d %s\n" %(self.creds.password, self.creds.host, self.creds.username, self.creds.database))
+        print("PGPASSWORD='%s' pg_dump -h %s -U %s -d %s" %(self.creds.password, self.creds.host, self.creds.username, self.creds.database))
 
 
     def print_scripts_config(self):
-        print("\n##  /opt/dotcms/sbin/scripts_config.sh ##")
+        print("##  /opt/dotcms/sbin/scripts_config.sh ##")
         print('SQL_DBNAMES="%s"' %(self.creds.database,))
         print('SQL_HOSTNAME="%s"' %(self.creds.host,))
         print('SQL_USERNAME="%s"' %(self.creds.username,))
-        print('SQL_PASSWORD="%s"\n' %(self.creds.password,))
+        print('SQL_PASSWORD="%s"' %(self.creds.password,))
 
 
 if __name__ == "__main__":
