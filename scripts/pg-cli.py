@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # curl -s https://raw.githubusercontent.com/yolabingo/dotcms/main/scripts/pg-cli.py | python3
-# prints out psql cli command for dotcms instance using db credentials from context.xml
+# prints out psql cli command for dotcms instance using db credentials from db.properties or context.xml
 
 import collections
 import glob
@@ -83,6 +83,10 @@ class DotcmsDbCreds():
 
     def print_connect(self):
         print("\nPGPASSWORD='%s' psql -h %s -U %s %s\n" %(self.creds.password, self.creds.host, self.creds.username, self.creds.database))
+
+
+    def print_dumpt(self):
+        print("\nPGPASSWORD='%s' pg_dump -h %s -U %s -d %s\n" %(self.creds.password, self.creds.host, self.creds.username, self.creds.database))
 
 
     def print_scripts_config(self):
