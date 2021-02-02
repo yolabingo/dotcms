@@ -5,7 +5,7 @@
 
 import collections
 import glob
-import xml.etree.ElementTree
+import xml.etree.ElementTree as ElementTree
 
 
 Credentials = collections.namedtuple('Credentials', 'password host username database')
