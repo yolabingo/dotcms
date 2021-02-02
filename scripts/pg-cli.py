@@ -64,21 +64,21 @@ class DotcmsDbCreds():
         for db_properties_file in glob.glob(self.db_properties):
             with open(db_properties_file, "r") as fh:
                 lines = fh.readlines()
-        for line in lines:
-            # remove all whitespace
-            line = "".join(line.split())
-            if "=" in line:
-                k, v = line.split("=")
-                if k == "username":
-                    db_username = v
-                elif k == "password":
-                    db_password = v
-                elif k == "jdbcUrl":
-                    # jdbcUrl=jdbc:postgresql://db.example.com/dotcms
-                    jdbc_url = v.split("/")
-                    if jdbc_url[0] == "jdbc:postgresql:":
-                        db_host = jdbc_url[2]
-                        db_database = jdbc_url[3]
+            for line in lines:
+                # remove all whitespace
+                line = "".join(line.split())
+                if "=" in line:
+                    k, v = line.split("=")
+                    if k == "username":
+                        db_username = v
+                    elif k == "password":
+                        db_password = v
+                    elif k == "jdbcUrl":
+                        # jdbcUrl=jdbc:postgresql://db.example.com/dotcms
+                        jdbc_url = v.split("/")
+                        if jdbc_url[0] == "jdbc:postgresql:":
+                            db_host = jdbc_url[2]
+                            db_database = jdbc_url[3]
         if db_username and db_password and db_host and db_database:
             print ("credentials found in\n  %s  " %(db_properties_file,))
             self.set_credentials(password=db_password, host=db_host, username=db_username, database=db_database)
