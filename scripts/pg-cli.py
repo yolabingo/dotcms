@@ -72,7 +72,7 @@ class DotcmsDbCreds():
                 elif k == "password":
                     db_password = v
                 elif k == "jdbcUrl":
-                    # jdbcUrl=jdbc:postgresql://db.example.com:5432/dotcms
+                    # jdbcUrl=jdbc:postgresql://db.example.com/dotcms
                     jdbc_url = v.split("/")
                     if jdbc_url[0] == "jdbc:postgresql:":
                         db_host = jdbc_url[2]
