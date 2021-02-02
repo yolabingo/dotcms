@@ -27,7 +27,7 @@ class DotcmsDbCreds():
         self.creds = Credentials(password=password, host=host, username=username, database=database)
 
 
-    def print_creds(self):
+    def print_credentials(self):
         self.parse_db_properties()
         if not self.creds:
             self.parse_context_xml()
@@ -99,4 +99,4 @@ class DotcmsDbCreds():
 
 
 if __name__ == "__main__":
-    DotcmsDbCreds().print_creds()
+    DotcmsDbCreds().print_credentials()
