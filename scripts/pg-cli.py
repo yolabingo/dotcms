@@ -35,8 +35,6 @@ class DotcmsDbCreds():
             print()
             self.print_scripts_config()
             print()
-            self.print_dump()
-            print()
             self.print_connect()
             print()
         else:
@@ -88,10 +86,6 @@ class DotcmsDbCreds():
 
     def print_connect(self):
         print("PGPASSWORD='%s' psql -h %s -U %s %s" %(self.creds.password, self.creds.host, self.creds.username, self.creds.database))
-
-
-    def print_dump(self):
-        print("PGPASSWORD='%s' pg_dump -h %s -U %s -d %s" %(self.creds.password, self.creds.host, self.creds.username, self.creds.database))
 
 
     def print_scripts_config(self):
