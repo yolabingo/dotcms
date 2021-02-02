@@ -61,6 +61,10 @@ class DotcmsDbCreds():
 
     def parse_db_properties(self):
         """ parse db.properties for database credentials """
+        db_username = None 
+        db_password = None 
+        db_host = None 
+        db_database = None
         for db_properties_file in glob.glob(self.db_properties):
             with open(db_properties_file, "r") as fh:
                 lines = fh.readlines()
